@@ -18,7 +18,7 @@ class ProtocolController extends Controller
     	return "holi";
     }
 
-    public function getProcessTest(Request $request){
+    public function getProcessesTest(Request $request){
     
     	try {
             $request = GuzzleController::doTheRequest('GET', 'API/bpm/process?p=0&c=1000');
@@ -34,6 +34,11 @@ class ProtocolController extends Controller
             return $error;
         }
         echo GuzzleController::getToken();
+    }
+
+    public function initiateProcessTest($id){
+        $response = GuzzleController::doTheRequest('POST', 'API/bpm/process/'.$id.'/instantiation');
+        return $response;
     }
 
 }
