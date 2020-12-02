@@ -19,6 +19,11 @@ class GuzzleController extends Controller
     private static $cliente = null;
     private static $token = null;
 
+    public static function setGuzzleClient($username, $password){      	
+        	static::$user = $username;
+        	static::$password = $password;
+    }
+
 	public static function getGuzzleClient(){
         if(static::$cliente === null){
         	//Creo una cookie jar para almacenar las cookies que me va a devolver Bonita luego del request del loginservice

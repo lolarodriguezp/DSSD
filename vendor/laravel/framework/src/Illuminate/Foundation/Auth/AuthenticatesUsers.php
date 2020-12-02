@@ -3,6 +3,7 @@
 namespace Illuminate\Foundation\Auth;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\GuzzleController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
@@ -119,7 +120,10 @@ trait AuthenticatesUsers
      */
     protected function authenticated(Request $request, $user)
     {
-        //
+        $credentials = $this->credentials($request);
+        $username = $credentials["email"];
+        $password = $credentials["password"];
+        GuzzleController::setGuzzleClient($username, $password);
     }
 
     /**

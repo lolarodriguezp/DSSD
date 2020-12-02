@@ -15,13 +15,24 @@ use App\Protocol;
 |
 */
 
+
+
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
+})->middleware('auth');
+
+Route::get('/', function () {
+	return redirect()->route('login');
 });
 
 Route::get('create', function(){
+	return view('createProyect', []);
+})->middleware('jefe');
+
+Route::get('addProtocols/{id}', function($id){
     $responsables = User::where('rol', 'Responsable')->pluck('name', 'id');
-	return view('createProyect', ['responsables' => $responsables]);
+	return view('createProtocols', ['responsables' => $responsables, 'idProyect' => $id ]);
 })->middleware('jefe');
 
 Route::get('viewProtocols', function(){
@@ -44,4 +55,5 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/proyect/store', 'ProyectController@store')->name('proyect.store')->middleware('jefe');
+Route::post('/protocol/store', 'ProtocolController@store')->name('protocol.store')->middleware('jefe');
 Route::get('/protocol/exec', 'ProtocolController@exec_protocol')->name('protocol.exec_protocol')->middleware('responsable');

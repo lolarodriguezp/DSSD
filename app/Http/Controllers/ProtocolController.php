@@ -14,31 +14,24 @@ class ProtocolController extends Controller
     	return view('viewProtocol',['protocols' => $protocolos] );
     }	
 
-    public function exec_protocol(){
-    	return "holi";
-    }
+    public function store(){
+    	$request = Input::all();
+        
+        $cant = count($request["responsable"]);
+        $id = $request["id_proyecto"];
 
-    public function getProcessesTest(Request $request){
-    
-    	try {
-            $request = GuzzleController::doTheRequest('GET', 'API/bpm/process?p=0&c=1000');
-            return $request['data'];
-
-        } catch (RequestException $e) {
-            if ($e->hasResponse()) {
-                $error = Psr7\str($e->getResponse());
-            } else {
-                $error = "No se puede conectar al servidor de Bonita OS";
-            }
-
-            return $error;
+        for ($i=0; $i < $cant ; $i++) { 
+            Protocol::create([
+                'nombre' => $request["nombre"][$i],
+                'id_responsable' =>$request["responsable"][$i],
+                'orden' => $request["orden"][$i],
+                'es_local'=> ($request["ejecucion"][$i] == 0) ? 0 : 1,
+                'id_proyecto' => $id, 
+            ]);
         }
-        echo GuzzleController::getToken();
+
+        return redirect()->route('home');
     }
 
-    public function initiateProcessTest($id){
-        $response = GuzzleController::doTheRequest('POST', 'API/bpm/process/'.$id.'/instantiation');
-        return $response;
-    }
 
 }
