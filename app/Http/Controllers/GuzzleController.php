@@ -80,10 +80,7 @@ class GuzzleController extends Controller
 						['headers' => [
 							'X-Bonita-API-Token' => static::$token
 							],
-						 'json' => [
-							'type' => 'java.lang.Integer',
-							'value'=> $data
-							]							
+						 'json' => $data			
 						]);
 					$tareas = $request->getBody();
 					$response['success'] = true;
@@ -105,7 +102,6 @@ class GuzzleController extends Controller
             $response['data'] = [];
         }
         return $response;
-        $response = array();
 
     }
 }

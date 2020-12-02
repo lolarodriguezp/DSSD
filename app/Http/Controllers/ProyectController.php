@@ -29,25 +29,30 @@ class ProyectController extends Controller
 
     protected function store()
     {   $request = Input::all();
-        // Proyect::create([
-        //     'nombre' => Input::get('nombre_proyecto'),
-        //     'fecha_inicio' => Input::get('fecha_inicio'),
-        //     'fecha_fin' => Input::get('fecha_fin'),
-        //     'id_responsable' => Input::get('idCreator'),
-        // ]);
+        Proyect::create([
+            'nombre' => Input::get('nombre_proyecto'),
+            'fecha_inicio' => Input::get('fecha_inicio'),
+            'fecha_fin' => Input::get('fecha_fin'),
+            'id_responsable' => Input::get('idCreator'),
+        ]);
         
-        // $id = Proyect::where('nombre', Input::get('nombre_proyecto'))->first();
+        $id = Proyect::where('nombre', Input::get('nombre_proyecto'))->first();
 
-        // //Busco los procesos
-        // $request = GuzzleController::doTheRequest('GET', 'API/bpm/process?p=0&c=1000');
-        // $data = $request['data'];
-        // //Ni idea como acceder al id pero veremos
-        // $idProceso = $data->id;
+        //Busco el id del proceso
+        $idProceso = RequestController::getProcesoId();
         
-        // //Aca se instanciaria el proceso
-        // GuzzleController::doTheRequest('POST', 'API/bpm/process/'.$idProceso.'/instantiation');
+        
+        //Aca se instanciaria el proceso
+        $idCase = RequestController::instanciarProceso($idProceso);
+
+        //Aca buscamos el user 
+        $idUser = RequestController::getUserId();
+
+        //Buscamos la primer tarea 
+        $idTarea = RequestController::obtenerTarea($idCase);
+        RequestController::asignarTarea($idTarea, $idUser);
 
         // return Redirect::to('addProtocols/'.$id->id) ;
-        return Redirect::to('addProtocols/1') ;
+        return Redirect::to('addProtocols/1', [$idCase]) ;
     }
 }
