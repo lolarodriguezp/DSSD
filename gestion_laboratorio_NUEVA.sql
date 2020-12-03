@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 30-11-2020 a las 13:52:07
+-- Tiempo de generación: 04-12-2020 a las 00:47:26
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.3
 
@@ -55,13 +55,6 @@ CREATE TABLE `miembros_proyectos` (
   `nombre` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `miembros_proyectos`
---
-
-INSERT INTO `miembros_proyectos` (`id_miembro`, `nombre`) VALUES
-(1, 'Pilar');
-
 -- --------------------------------------------------------
 
 --
@@ -76,17 +69,10 @@ CREATE TABLE `protocolos` (
   `fecha_fin` date DEFAULT NULL,
   `orden` int(11) NOT NULL,
   `es_local` bit(1) NOT NULL,
-  `puntaje` int(11) NOT NULL,
+  `puntaje` int(11) NOT NULL DEFAULT 0,
   `estado` varchar(255) NOT NULL DEFAULT 'Pendiente',
   `id_proyecto` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `protocolos`
---
-
-INSERT INTO `protocolos` (`id_protocolo`, `nombre`, `id_responsable`, `fecha_inicio`, `fecha_fin`, `orden`, `es_local`, `puntaje`, `estado`, `id_proyecto`) VALUES
-(1, 'Primer protocolo', 1, NULL, '2020-10-21', 1, b'1', 11, 'Pendiente', 1);
 
 -- --------------------------------------------------------
 
@@ -102,13 +88,6 @@ CREATE TABLE `proyectos` (
   `id_responsable` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `proyectos`
---
-
-INSERT INTO `proyectos` (`id_proyecto`, `nombre`, `fecha_inicio`, `fecha_fin`, `id_responsable`) VALUES
-(1, 'Primer proyecto', '2020-10-20', '2020-10-21', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -116,7 +95,7 @@ INSERT INTO `proyectos` (`id_proyecto`, `nombre`, `fecha_inicio`, `fecha_fin`, `
 --
 
 CREATE TABLE `users` (
-  `id` bigint(20) NOT NULL,
+  `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
@@ -130,7 +109,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `rol`, `created_at`, `updated_at`) VALUES
-(2, 'Pilar Acha', 'pilaracha97@gmail.com', '$2y$10$7zvF56kHyOm31Rd84s4p8uatsOuE7CytHGkhrtq4XPaCLAAYg1zXq', 'Jefe', '2020-11-24 23:52:28', '2020-11-24 23:52:28');
+(1, 'Pilar', 'pilar', '$2y$10$pHZ18LSH6rZ8eA64WVK2Q.sbyrUXrjY2g4y3srwAmGXJ8R7WQDX9m', 'Jefe', '2020-12-04 02:43:32', '2020-12-03 23:47:07'),
+(2, 'Lola', 'lola', '$2y$10$0QLBy32mZpE2uSnOTG/UCO7eZ0u6zQKD6K0ib0WupT1S.RJQlEZxW', 'Responsable', '2020-12-04 02:44:02', '2020-12-03 23:47:10');
 
 --
 -- Índices para tablas volcadas
@@ -190,25 +170,25 @@ ALTER TABLE `actividades`
 -- AUTO_INCREMENT de la tabla `miembros_proyectos`
 --
 ALTER TABLE `miembros_proyectos`
-  MODIFY `id_miembro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_miembro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `protocolos`
 --
 ALTER TABLE `protocolos`
-  MODIFY `id_protocolo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_protocolo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `proyectos`
 --
 ALTER TABLE `proyectos`
-  MODIFY `id_proyecto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_proyecto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas
@@ -226,13 +206,13 @@ ALTER TABLE `actividades_protocolos`
 --
 ALTER TABLE `protocolos`
   ADD CONSTRAINT `protocolo_proyecto` FOREIGN KEY (`id_proyecto`) REFERENCES `proyectos` (`id_proyecto`),
-  ADD CONSTRAINT `protocolo_responsable` FOREIGN KEY (`id_responsable`) REFERENCES `miembros_proyectos` (`id_miembro`);
+  ADD CONSTRAINT `protocolo_responsable` FOREIGN KEY (`id_responsable`) REFERENCES `users` (`id`);
 
 --
 -- Filtros para la tabla `proyectos`
 --
 ALTER TABLE `proyectos`
-  ADD CONSTRAINT `proyecto_responsable` FOREIGN KEY (`id_responsable`) REFERENCES `miembros_proyectos` (`id_miembro`);
+  ADD CONSTRAINT `proyectos_ibfk_1` FOREIGN KEY (`id_responsable`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

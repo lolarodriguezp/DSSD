@@ -52,7 +52,6 @@ class ProyectController extends Controller
         $idTarea = RequestController::obtenerTarea($idCase);
         RequestController::asignarTarea($idTarea, $idUser);
 
-        // return Redirect::to('addProtocols/'.$id->id) ;
-        return Redirect::to('addProtocols/1', [$idCase]) ;
+        return Redirect::to('addProtocols/'.$id->id) ;
     }
 }

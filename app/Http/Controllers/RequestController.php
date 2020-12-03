@@ -44,7 +44,9 @@ class RequestController extends Controller
     }
 
     public static function asignarTarea($idTask, $idUser){
-        $data = array("assigned_id" => $idUser);
+        $data = array(
+            "assigned_id" => $idUser
+        );
         $response = GuzzleController::doTheRequest('PUT', 'API/bpm/userTask/'.$idTask, $data);   
         return $response;
     }
@@ -52,5 +54,14 @@ class RequestController extends Controller
     public static function obtenerTarea($caseId){
         $response = GuzzleController::doTheRequest('GET', 'API/bpm/task?f=caseId='.$caseId);   
         return ($response['data'][0]->id);
+    }
+
+    public static function setearEsLocal($idCase, $esLocal){
+        $data = array(
+            "type" => "java.lang.Boolean", 
+            "value" => "true"
+        );
+        $response = GuzzleController::doTheRequest('PUT', 'API/bpm/caseVariable/'.$idCase.'/es_local', $data);   
+        return $response;
     }
 }

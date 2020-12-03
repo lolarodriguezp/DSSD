@@ -22,6 +22,10 @@ Route::get('/', function () {
     return view('home');
 })->middleware('auth');
 
+Route::get('register', function () {
+    return redirect()->route('register');
+})->middleware('auth');
+
 Route::get('/', function () {
 	return redirect()->route('login');
 });

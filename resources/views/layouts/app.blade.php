@@ -71,9 +71,9 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    @if (Auth::user()->rol == 'Jefe')
+                                    <!-- @if (Auth::user()->rol == 'Jefe')
                                         <a class="dropdown-item" style="color:Black;" href="{{ url('register') }}">{{ __('Registrar usuario') }}</a>
-                                    @endif
+                                    @endif -->
                                     <a class="dropdown-item" style="color:Black;" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

@@ -72,8 +72,25 @@
                         </div>
                         @endif
                         @if(Auth::user()->rol == "Responsable")
-                            <p>Responsable de protocolo</p>
-                                <a href="{{url('viewProtocols')}}" class="btn btn-success">Seguimiento de proyectos</a>
+                        <div class="col-md-4 col-sm-12">
+                            <div class="card mb-3 bg-success text-white">
+                            <div class="row no-gutters" >
+                                <div class="col-md-4 d-flex justify-content-center align-items-center">
+                                    <h1><i class="fa fa-question"></i></h1>
+                                </div>
+                                <div class="col-md-8">
+                                <div class="card-body p-3" style="min-height:180px">
+                                    <h5 class="card-title">Seguimiento de proyectos</h5>
+                                    <p class="card-text">Consulta el estado actual de un proyecto.</p>   
+                                </div>
+                                </div>
+                                <div class="col-md-12 p-2 text-center" style="background: rgba(0,0,0,0.1)">
+                                    <a href="{{url('viewProtocols')}}" class="text-white" >Ir ! <i class="fa fa-arrow-circle-right"></i></a>
+
+                                </div>
+                            </div>
+                            </div>
+                        </div>
                         @endif
                     </div>
                 <!-- </div> -->
