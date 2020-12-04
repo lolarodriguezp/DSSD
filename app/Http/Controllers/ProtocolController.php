@@ -21,7 +21,8 @@ class ProtocolController extends Controller
         $cant = count($request["responsable"]);
         $id = $request["id_proyecto"];
 
-        $protocolo = Proyect::where('nombre', Input::get('nombre_proyecto'))->first();
+
+        $protocolo = Proyect::where('id', $id)->first();
 
         $es_local = true;
         for ($i=0; $i < $cant ; $i++) { 
