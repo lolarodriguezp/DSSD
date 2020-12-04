@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\Protocol;
 use App\Proyect;
+use Illuminate\Support\Facades\Redirect;
 
 class ProtocolController extends Controller
 {
@@ -44,6 +45,22 @@ class ProtocolController extends Controller
         }
 
         RequestController::completarTarea($protocolo->id_task);
+
+        return redirect()->route('home');
+    }
+
+    public function result(){
+    	$request = Input::all();
+        $protocoloId = $request["id"];
+        return Redirect::to('determineResultProtocol/'.$protocoloId) ;
+    }
+
+    public function storeResult(){
+    	$request = Input::all();
+        $protocoloId = $request["id"];
+        $protocolo = Protocol::where('id', $protocoloId)->first();
+
+        $protocolo->update(array('puntaje'=>$request["resultado"],'finalizado_con'=>$request["finalizado_con"], 'estado'=> 'Finalizado', 'fecha_fin' => $request["fecha_fin"]));
 
         return redirect()->route('home');
     }

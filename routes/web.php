@@ -40,9 +40,20 @@ Route::get('addProtocols/{id}', function($id){
 })->middleware('jefe');
 
 Route::get('viewProtocols', function(){
-    $protocols = Protocol::Where('id_responsable', Auth::user()->id)->get();
+	$activeProyect = Proyect::whereNotNull('id_case')->first();
+	if($activeProyect != null){
+		$protocols = Protocol::Where('id_responsable', Auth::user()->id)->where('id_proyecto', $activeProyect->id)->where('estado', '<>', 'Finalizado')->get();
+	}else{
+		$protocols = array();
+	}
+    
     return view('viewProtocols',  ['protocols' => $protocols]);
 })->middleware('responsable');
+
+Route::get('determineResultProtocol/{id}', function($id){
+    return view('determineResultProtocol',  ['id' => $id]);
+})->middleware('responsable');
+
 
 Route::get('followProyects', function(){
    	$proyects = Proyect::all();
@@ -61,3 +72,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/proyect/store', 'ProyectController@store')->name('proyect.store')->middleware('jefe');
 Route::post('/protocol/store', 'ProtocolController@store')->name('protocol.store')->middleware('jefe');
 Route::get('/protocol/exec', 'ProtocolController@exec_protocol')->name('protocol.exec_protocol')->middleware('responsable');
+Route::post('/protocol/result', 'ProtocolController@result')->name('protocol.result')->middleware('responsable');
+Route::post('/protocol/storeResult', 'ProtocolController@storeResult')->name('protocol.storeResult')->middleware('responsable');
