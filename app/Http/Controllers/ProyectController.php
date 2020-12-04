@@ -41,7 +41,6 @@ class ProyectController extends Controller
         //Busco el id del proceso
         $idProceso = RequestController::getProcesoId();
         
-        
         //Aca se instanciaria el proceso
         $idCase = RequestController::instanciarProceso($idProceso);
 
@@ -52,6 +51,6 @@ class ProyectController extends Controller
         $idTarea = RequestController::obtenerTarea($idCase);
         RequestController::asignarTarea($idTarea, $idUser);
 
-        return Redirect::to('addProtocols/'.$id->id) ;
+        return Redirect::to('addProtocols/'.$id->id_proyecto) ;
     }
 }
