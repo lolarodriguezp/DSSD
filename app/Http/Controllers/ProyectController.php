@@ -36,22 +36,28 @@ class ProyectController extends Controller
             'id_responsable' => Input::get('idCreator'),
         ]);
         
-        $id = Proyect::where('nombre', Input::get('nombre_proyecto'))->first();
+        $protocolo = Proyect::where('nombre', Input::get('nombre_proyecto'))->first();
 
-        //Busco el id del proceso
-        $idProceso = RequestController::getProcesoId();
+        // //Busco el id del proceso
+        // $idProceso = RequestController::getProcesoId();
         
         
-        //Aca se instanciaria el proceso
-        $idCase = RequestController::instanciarProceso($idProceso);
+        // //Aca se instanciaria el proceso
+        // $idCase = RequestController::instanciarProceso($idProceso);
 
-        //Aca buscamos el user 
-        $idUser = RequestController::getUserId();
+        // //Aca buscamos el user 
+        // $idUser = RequestController::getUserId();
 
-        //Buscamos la primer tarea 
-        $idTarea = RequestController::obtenerTarea($idCase);
-        RequestController::asignarTarea($idTarea, $idUser);
+        // //Buscamos la primer tarea 
+        // $idTask = RequestController::obtenerTarea($idCase);
+        // RequestController::asignarTarea($idTask, $idUser);
+        $idCase = 1;
+        $idTask = 2;
 
-        return Redirect::to('addProtocols/'.$id->id) ;
+
+        //Guardo en el protocolo el caseId y el taskId
+        $protocolo->update(array('id_case'=>$idCase,'id_task'=>$idTask));
+
+        return Redirect::to('addProtocols/'.$protocolo->id) ;
     }
 }

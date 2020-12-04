@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 04-12-2020 a las 00:47:26
+-- Tiempo de generación: 04-12-2020 a las 02:03:46
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.3
 
@@ -62,7 +62,7 @@ CREATE TABLE `miembros_proyectos` (
 --
 
 CREATE TABLE `protocolos` (
-  `id_protocolo` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `nombre` varchar(100) NOT NULL,
   `id_responsable` int(11) NOT NULL,
   `fecha_inicio` date DEFAULT NULL,
@@ -81,11 +81,13 @@ CREATE TABLE `protocolos` (
 --
 
 CREATE TABLE `proyectos` (
-  `id_proyecto` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `nombre` varchar(100) NOT NULL,
   `fecha_inicio` date NOT NULL,
   `fecha_fin` date NOT NULL,
-  `id_responsable` int(11) NOT NULL
+  `id_responsable` int(11) NOT NULL,
+  `id_case` int(11) DEFAULT NULL,
+  `id_task` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -139,7 +141,7 @@ ALTER TABLE `miembros_proyectos`
 -- Indices de la tabla `protocolos`
 --
 ALTER TABLE `protocolos`
-  ADD PRIMARY KEY (`id_protocolo`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `protocolo_responsable` (`id_responsable`),
   ADD KEY `protocolo_proyecto` (`id_proyecto`);
 
@@ -147,7 +149,7 @@ ALTER TABLE `protocolos`
 -- Indices de la tabla `proyectos`
 --
 ALTER TABLE `proyectos`
-  ADD PRIMARY KEY (`id_proyecto`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `proyecto_responsable` (`id_responsable`);
 
 --
@@ -176,13 +178,13 @@ ALTER TABLE `miembros_proyectos`
 -- AUTO_INCREMENT de la tabla `protocolos`
 --
 ALTER TABLE `protocolos`
-  MODIFY `id_protocolo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `proyectos`
 --
 ALTER TABLE `proyectos`
-  MODIFY `id_proyecto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
@@ -199,13 +201,13 @@ ALTER TABLE `users`
 --
 ALTER TABLE `actividades_protocolos`
   ADD CONSTRAINT `fk_actividad` FOREIGN KEY (`id_actividad`) REFERENCES `actividades` (`id_actividad`),
-  ADD CONSTRAINT `fk_protocolo` FOREIGN KEY (`id_protocolo`) REFERENCES `protocolos` (`id_protocolo`);
+  ADD CONSTRAINT `fk_protocolo` FOREIGN KEY (`id_protocolo`) REFERENCES `protocolos` (`id`);
 
 --
 -- Filtros para la tabla `protocolos`
 --
 ALTER TABLE `protocolos`
-  ADD CONSTRAINT `protocolo_proyecto` FOREIGN KEY (`id_proyecto`) REFERENCES `proyectos` (`id_proyecto`),
+  ADD CONSTRAINT `protocolo_proyecto` FOREIGN KEY (`id_proyecto`) REFERENCES `proyectos` (`id`),
   ADD CONSTRAINT `protocolo_responsable` FOREIGN KEY (`id_responsable`) REFERENCES `users` (`id`);
 
 --

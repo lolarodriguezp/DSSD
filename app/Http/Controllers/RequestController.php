@@ -56,12 +56,20 @@ class RequestController extends Controller
         return ($response['data'][0]->id);
     }
 
-    public static function setearEsLocal($idCase, $esLocal){
+    public static function setearEsLocal($idCase, $es_local){
         $data = array(
             "type" => "java.lang.Boolean", 
-            "value" => "true"
+            "value" => $es_local
         );
         $response = GuzzleController::doTheRequest('PUT', 'API/bpm/caseVariable/'.$idCase.'/es_local', $data);   
+        return $response;
+    }
+
+    public static function completarTarea($idTask){
+        $data = array(
+            "state" => "completed", 
+        );
+        $response = GuzzleController::doTheRequest('PUT', 'API/bpm/activity/'.$idTask, $data);   
         return $response;
     }
 }

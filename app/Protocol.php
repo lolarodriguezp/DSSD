@@ -10,6 +10,6 @@ class Protocol extends Model
     protected $table = 'protocolos';
 
     protected $fillable = [
-        'id_proyecto', 'nombre', 'id_responsable', 'orden', 'es_local','fecha_inicio', 'fecha_fin', 'estado', 'puntaje'
+        'id', 'nombre', 'id_responsable', 'orden', 'es_local','fecha_inicio', 'fecha_fin', 'estado', 'puntaje'
     ];
 }

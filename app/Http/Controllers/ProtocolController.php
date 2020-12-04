@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\Protocol;
+use App\Proyect;
 
 class ProtocolController extends Controller
 {
@@ -20,7 +21,14 @@ class ProtocolController extends Controller
         $cant = count($request["responsable"]);
         $id = $request["id_proyecto"];
 
+        $protocolo = Proyect::where('nombre', Input::get('nombre_proyecto'))->first();
+
+        $es_local = true;
         for ($i=0; $i < $cant ; $i++) { 
+            //Cuando estoy procesando el protocolo con orden 1, me guardo el "es_local"
+            if($request["orden"][$i] == 1){
+                $es_local = ($request["ejecucion"][$i] == 0) ? 0 : 1;
+            }
             Protocol::create([
                 'nombre' => $request["nombre"][$i],
                 'id_responsable' =>$request["responsable"][$i],
@@ -29,6 +37,12 @@ class ProtocolController extends Controller
                 'id_proyecto' => $id, 
             ]);
         }
+
+        if(!$es_local){
+            RequestController::setearEsLocal($protocolo->id_case, $es_local);
+        }
+
+        RequestController::completarTarea($protocolo->id_task);
 
         return redirect()->route('home');
     }
