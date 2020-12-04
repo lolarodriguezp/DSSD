@@ -35,7 +35,7 @@ Route::get('create', function(){
 })->middleware('jefe');
 
 Route::get('addProtocols/{id}', function($id){
-    $responsables = User::where('rol', 'Responsable')->pluck('name', 'id');
+	$responsables = User::where('rol', 'Responsable')->pluck('name', 'id');
 	return view('createProtocols', ['responsables' => $responsables, 'idProyect' => $id ]);
 })->middleware('jefe');
 
