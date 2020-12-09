@@ -12,8 +12,8 @@ use GuzzleHttp\Cookie\SessionCookieJar;
 
 class GuzzleController extends Controller
 {
-    private static $user = 'walter.bates';
-    private static $password = 'bpm';
+    private $user = 'walter.bates';
+    private $password = 'bpm';
     private static $base_uri = 'http://localhost:8080/bonita/';
 
     private static $cliente = null;
