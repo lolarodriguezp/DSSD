@@ -27,17 +27,20 @@ class ProtocolController extends Controller
 
         $es_local = true;
         for ($i=0; $i < $cant ; $i++) { 
-            //Cuando estoy procesando el protocolo con orden 1, me guardo el "es_local"
-            if($request["orden"][$i] == 1){
-                $es_local = ($request["ejecucion"][$i] == 0) ? 0 : 1;
-            }
-            Protocol::create([
+            $id_protocol = Protocol::create([
                 'nombre' => $request["nombre"][$i],
                 'id_responsable' =>$request["responsable"][$i],
                 'orden' => $request["orden"][$i],
                 'es_local'=> ($request["ejecucion"][$i] == 0) ? 0 : 1,
                 'id_proyecto' => $id, 
-            ]);
+            ])->id;;
+
+            //Cuando estoy procesando el protocolo con orden 1, me guardo el "es_local"
+            if($request["orden"][$i] == 1){
+                $es_local = ($request["ejecucion"][$i] == 0) ? 0 : 1;
+                $protocol = Protocol::where('id', $id_protocol);
+                $protocol->update(array('estado'=> 'Iniciado'));
+            }
         }
 
         if(!$es_local){

@@ -40,8 +40,7 @@ class ProyectController extends Controller
 
         //Busco el id del proceso
         $idProceso = RequestController::getProcessId();
-        
-        
+               
         //Aca se instanciaria el proceso
         $idCase = RequestController::instantiateProcess($idProceso);
 
