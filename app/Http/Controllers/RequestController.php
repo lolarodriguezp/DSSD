@@ -23,7 +23,7 @@ class RequestController extends Controller
     }
 
     public static function getUserId(){
-        $response = GuzzleController::doTheRequest('GET', 'API/identity/user??p=0&c=10&o=lastname%20ASC&s='.Auth::user()->name.'&f=enabled%3dtrue');   
+        $response = GuzzleController::doTheRequest('GET', 'API/identity/user?f=userName='.Auth::user()->email);   
         $idUser = $response['data'][0]->id; #Obtengo el id del usuario
 
         return $idUser;
@@ -31,7 +31,7 @@ class RequestController extends Controller
 
     public static function getProcessId(){
         $response = GuzzleController::doTheRequest('GET', 'API/bpm/process?p=0&c=1000');   
-        $idProceso = $response['data'][0]->id; #Obtengo el id del usuario
+        $idProceso = $response['data'][0]->id; #Obtengo el id del proceso
 
         return $idProceso;
     }
@@ -68,5 +68,19 @@ class RequestController extends Controller
     public static function runTask($idTask){
         $response = GuzzleController::doTheRequest('POST', '/bonita/API/bpm/userTask/'.$idTask.'/execution');   
         return $response;
+    }
+
+    public static function instanceExists($idCase){
+        $response = GuzzleController::doTheRequest('GET', '/bonita/API/bpm/activity?p=0&c=1000&f=caseId='.$idCase);
+        if(empty($response)){
+            return false;
+        }
+        return true;
+        
+    }
+
+    public static function getTaskName($caseId){
+        $response = GuzzleController::doTheRequest('GET', 'API/bpm/task?f=caseId='.$caseId);   
+        return ($response['data'][0]->name);
     }
 }
