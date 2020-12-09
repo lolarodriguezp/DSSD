@@ -23,7 +23,7 @@ class ProtocolController extends Controller
         $id = $request["id_proyecto"];
 
 
-        $protocolo = Proyect::where('id', $id)->first();
+        $proyecto = Proyect::where('id', $id)->first();
 
         $es_local = true;
         for ($i=0; $i < $cant ; $i++) { 
@@ -41,10 +41,10 @@ class ProtocolController extends Controller
         }
 
         if(!$es_local){
-            RequestController::setEsLocal($protocolo->id_case, $es_local);
+            RequestController::setEsLocal($proyecto->id_case, $es_local);
         }
 
-        RequestController::runTask($protocolo->id_task);
+        RequestController::runTask($proyecto->id_task);
 
         return redirect()->route('home');
     }

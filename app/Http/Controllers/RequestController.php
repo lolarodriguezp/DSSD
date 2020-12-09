@@ -23,7 +23,7 @@ class RequestController extends Controller
     }
 
     public static function getUserId(){
-        $response = GuzzleController::doTheRequest('GET', 'API/identity/user??p=0&c=10&o=lastname%20ASC&s='.Auth::user()->name.'&f=enabled%3dtrue');   
+        $response = GuzzleController::doTheRequest('GET', 'API/identity/user?f=userName='.Auth::user()->email);   
         $idUser = $response['data'][0]->id; #Obtengo el id del usuario
 
         return $idUser;
