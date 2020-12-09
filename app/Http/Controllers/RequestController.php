@@ -51,8 +51,8 @@ class RequestController extends Controller
         return $response;
     }
 
-    public static function getTask($caseId){
-        $response = GuzzleController::doTheRequest('GET', 'API/bpm/task?f=caseId='.$caseId);   
+    public static function getTask ($caseId){
+        $response = GuzzleController::doTheRequest('GET', 'API/bpm/activity?p=0&c=1000&f=caseId='.$caseId);   
         return ($response['data'][0]->id);
     }
 
