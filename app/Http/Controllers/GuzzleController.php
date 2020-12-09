@@ -20,8 +20,8 @@ class GuzzleController extends Controller
     private static $token = null;
 
     public static function setGuzzleClient($username, $password){      	
-        	static::$user = $username;
-        	static::$password = $password;
+            static::$user = $username;
+            static::$password = $password;
     }
 
 	public static function getGuzzleClient(){
