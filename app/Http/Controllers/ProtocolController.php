@@ -41,10 +41,10 @@ class ProtocolController extends Controller
         }
 
         if(!$es_local){
-            RequestController::setearEsLocal($protocolo->id_case, $es_local);
+            RequestController::setEsLocal($protocolo->id_case, $es_local);
         }
 
-        RequestController::completarTarea($protocolo->id_task);
+        RequestController::runTask($protocolo->id_task);
 
         return redirect()->route('home');
     }
