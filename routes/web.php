@@ -3,7 +3,7 @@
 use App\User;
 use App\Proyect;
 use App\Protocol;
-use App\Http\Controllers\RequestController
+use App\Http\Controllers\RequestController;
 
 /*
 |--------------------------------------------------------------------------
