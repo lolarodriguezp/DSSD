@@ -39,21 +39,21 @@ class ProyectController extends Controller
         $protocolo = Proyect::where('nombre', Input::get('nombre_proyecto'))->first();
 
         //Busco el id del proceso
-        $idProceso = RequestController::getProcesoId();
+        $idProceso = RequestController::getProcessId();
         
         //Aca se instanciaria el proceso
-        $idCase = RequestController::instanciarProceso($idProceso);
+        $idCase = RequestController::instantiateProcess($idProceso);
 
         //Aca buscamos el user 
         $idUser = RequestController::getUserId();
 
         //Buscamos la primer tarea 
-        $idTask = RequestController::obtenerTarea($idCase);
-        RequestController::asignarTarea($idTask, $idUser);
+        $idTask = RequestController::getTask($idCase);
+        RequestController::assignTask($idTask, $idUser);
 
 
-        //Guardo en el protocolo el caseId y el taskId
-        $protocolo->update(array('id_case'=>$idCase,'id_task'=>$idTask));
+        //Guardo en el proyecto el caseId
+        $protocolo->update(array('id_case'=>$idCase));
 
         return Redirect::to('addProtocols/'.$protocolo->id) ;
     }

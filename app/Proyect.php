@@ -10,6 +10,6 @@ class Proyect extends Model
     protected $table = 'proyectos';
 
     protected $fillable = [
-        'id' ,'nombre', 'fecha_inicio', 'fecha_fin', 'id_responsable', 'id_case', 'id_task'
+        'id' ,'nombre', 'fecha_inicio', 'fecha_fin', 'id_responsable', 'id_case'
     ];
 }

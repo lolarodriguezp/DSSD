@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\GuzzleController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Session;
 
 trait AuthenticatesUsers
 {
@@ -123,7 +124,8 @@ trait AuthenticatesUsers
         $credentials = $this->credentials($request);
         $username = $credentials["email"];
         $password = $credentials["password"];
-        GuzzleController::setGuzzleClient($username, $password);
+        Session::put('username', $username);
+        Session::put('password', $password);
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
@@ -10,19 +11,14 @@ use GuzzleHttp\Psr7;
 use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\Cookie\SessionCookieJar;
 
+
 class GuzzleController extends Controller
 {
-    private static $user='pilar';
-    private static $password = 'pilar1234';
+
     private static $base_uri = 'http://localhost:8080/bonita/';
 
     private static $cliente = null;
     private static $token = null;
-
-    public static function setGuzzleClient($username, $password){      	
-        	static::$user = $username;
-        	static::$password = $password;
-    }
 
 	public static function getGuzzleClient(){
         if(static::$cliente === null){
@@ -38,8 +34,8 @@ class GuzzleController extends Controller
 
             $resp = $gcliente->request('POST', 'loginservice', [
                 'form_params' => [
-                    'username' => static::$user,
-                    'password' => static::$password,
+                    'username' => Session::get('username'),
+                    'password' => Session::get('password'),
                     'redirect' => 'false'
                 ]
             ]);
