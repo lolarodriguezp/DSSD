@@ -21,7 +21,7 @@
                             <tbody>
                                 @foreach ($notifications as $notification)
                                 <tr>
-                                    <td> El proyecto{{ (\App\Proyect::where('id', $notification->id_proyecto)->pluck('nombre'))[0]  }} ha ejecutado otro protocolo exitosamente!.</td>
+                                    <td> El proyecto {{ (\App\Proyect::where('id', $notification->id_proyecto)->pluck('nombre'))[0]  }} ha ejecutado otro protocolo exitosamente!.</td>
                                     <td>
                                         {{ Form::open(array('url' => 'notification/accept')) }}
                                             {{ Form::hidden('id', $notification->id, ['class' => 'form-control' ]) }}

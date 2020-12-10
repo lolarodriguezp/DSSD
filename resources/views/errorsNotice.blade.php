@@ -21,7 +21,7 @@
                             <tbody>
                                 @foreach ($notifications as $notification)
                                 <tr>
-                                    <td> El proyecto{{ (\App\Proyect::where('id', $notification->id_proyecto)->pluck('nombre'))[0]  }} ha tenido una falla.</td>
+                                    <td> El proyecto {{ (\App\Proyect::where('id', $notification->id_proyecto)->pluck('nombre'))[0]  }} ha tenido una falla.</td>
                                     <td>
                                         {{ Form::open(array('url' => 'notification/cancel')) }}
                                             {{ Form::hidden('id', $notification->id, ['class' => 'form-control' ]) }}

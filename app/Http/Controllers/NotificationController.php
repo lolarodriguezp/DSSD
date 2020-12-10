@@ -36,9 +36,10 @@ class NotificationController extends Controller
 
             $es_local = ($protocolo->es_local == 0) ? true : false;
             if(!$es_local){
-                RequestController::setEsLocal($proyecto->id_case, $false);
+                RequestController::setEsLocal($proyecto->id_case, false);
                 RequestController::setidProyect($proyecto->id_case, $protocolo->id_proyecto);
                 RequestController::setidProtocol($proyecto->id_case, $protocolo->id);
+                $protocolo->update(array('estado'=> 'Iniciado'));
             }
             
         }
