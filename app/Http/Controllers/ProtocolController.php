@@ -67,7 +67,7 @@ class ProtocolController extends Controller
         //Ejecuto la tarea en Bonita
         RequestController::runTask($proyecto->id_task);
 
-        return redirect()->route('viewProtocols');
+        return Redirect::to('viewProtocols') ;
 
     }
 
