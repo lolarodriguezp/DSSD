@@ -23,8 +23,16 @@
                                 <tr>
                                     <td> El proyecto{{ (\App\Proyect::where('id', $notification->id_proyecto)->pluck('nombre'))[0]  }} ha tenido una falla.</td>
                                     <td>
-                                        <button type="button" class="btn btn-danger">¡Cancelar!</button>
-                                        <button type="button" class="btn btn-success">Continuar</button>
+                                        {{ Form::open(array('url' => 'notification/cancel')) }}
+                                            {{ Form::hidden('id', $notification->id, ['class' => 'form-control' ]) }}
+                                            {{ Form::hidden('que_hacer', 0, ['class' => 'form-control' ]) }}
+                                            {{ Form::submit('Cancelar', ['class' => 'btn btn-danger']) }}
+                                        {{ Form::close() }}
+                                        {{ Form::open(array('url' => 'notification/continue')) }}
+                                            {{ Form::hidden('id', $notification->id, ['class' => 'form-control' ]) }}
+                                            {{ Form::hidden('que_hacer', 1, ['class' => 'form-control' ]) }}
+                                            {{ Form::submit('Continuar', ['class' => 'btn btn-success']) }}
+                                        {{ Form::close() }}
                                     </td>
                                 </tr>
                                 @endforeach
