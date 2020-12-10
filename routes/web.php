@@ -113,7 +113,7 @@ Route::get('errorsNotice', function(){
 		$proyectsId = array();
 		foreach ($activeProyects as $proyect) {
 			if(RequestController::instanceExists($proyect->id_case) &&
-			   (RequestController::getTaskName($proyect->id_case) == "Notificacion fallida")){
+			   (RequestController::getTaskName($proyect->id_case) == "Notificación fallida")){
 				$user = User::where('id', $proyect->id_responsable)->first();
 				//Aca buscamos el user que es jefe del proyecto del protocolo
 				$idUser = RequestController::getUserIdByName($user->email);
