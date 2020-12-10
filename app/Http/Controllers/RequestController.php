@@ -105,7 +105,7 @@ class RequestController extends Controller
             "type" => "java.lang.Boolean", 
             "value" => $falla_ejecucion
         );
-        $response = GuzzleController::doTheRequest('PUT', 'API/bpm/caseVariable/'.$idCase.'/falla_ejecucion', $data);   
+        $response = GuzzleController::doTheRequest('PUT', 'API/bpm/caseVariable/'.$idCase.'/falla_ejecución', $data);   
         return $response;
     }
 
