@@ -31,7 +31,7 @@ class NotificationController extends Controller
             $ultimo_protocolo = false;
         }
         //Seteo variable ultimo_protocolo
-        if(!$$ultimo_protocolo){
+        if(!$ultimo_protocolo){
             RequestController::setUltimoProtocolo($proyecto->id_case, $ultimo_protocolo);
             RequestController::setEsLocal($proyecto->id_case, $protocolo->es_local);
         }
