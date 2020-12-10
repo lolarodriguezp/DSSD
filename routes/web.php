@@ -145,3 +145,6 @@ Route::post('/protocol/result', 'ProtocolController@result')->name('protocol.res
 Route::post('/protocol/storeResult', 'ProtocolController@storeResult')->name('protocol.storeResult')->middleware('responsable');
 Route::post('/notification/cancel', 'NotificationController@confirmFailedNotification')->name('notification.confirmFailedNotification')->middleware('jefe');
 Route::post('/notification/continue', 'NotificationController@confirmFailedNotification')->name('notification.confirmFailedNotification')->middleware('jefe');
+Route::post('/notification/accept', 'NotificationController@confirmSuccessfulNotification')->name('notification.confirmSuccessfulNotification')->middleware('jefe');
+
+
