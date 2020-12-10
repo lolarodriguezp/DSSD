@@ -33,7 +33,14 @@ class NotificationController extends Controller
         //Seteo variable ultimo_protocolo
         if(!$$ultimo_protocolo){
             RequestController::setUltimoProtocolo($proyecto->id_case, $ultimo_protocolo);
-            RequestController::setEsLocal($proyecto->id_case, $protocolo->es_local);
+
+            $es_local = ($protocolo->es_local == 0) ? true : false;
+            if(!$es_local){
+                RequestController::setEsLocal($proyecto->id_case, $false);
+                RequestController::setidProyect($proyecto->id_case, $protocolo->id_proyecto);
+                RequestController::setidProtocol($proyecto->id_case, $protocolo->id);
+            }
+            
         }
         //Ejecuto la tarea en Bonita
         RequestController::runTask($proyecto->id_task);

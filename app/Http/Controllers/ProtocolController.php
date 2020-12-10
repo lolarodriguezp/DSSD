@@ -48,6 +48,8 @@ class ProtocolController extends Controller
 
         if(!$es_local){
             RequestController::setEsLocal($proyecto->id_case, $es_local);
+            RequestController::setidProyect($proyecto->id_case, $protocol->id_proyecto);
+            RequestController::setidProtocol($proyecto->id_case, $protocol->id);
         }
 
         RequestController::runTask($proyecto->id_task);
