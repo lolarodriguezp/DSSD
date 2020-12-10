@@ -36,16 +36,16 @@
                             <div class="card mb-3 bg-success text-white">
                             <div class="row no-gutters" >
                                 <div class="col-md-4 d-flex justify-content-center align-items-center">
-                                    <h1><i class="fa fa-question"></i></h1>
+                                    <h1><i class="fa  fa-exclamation"></i></h1>
                                 </div>
                                 <div class="col-md-8">
                                 <div class="card-body p-3" style="min-height:180px">
-                                    <h5 class="card-title">Seguimiento de proyectos</h5>
-                                    <p class="card-text">Consulta el estado actual de un proyecto.</p>   
+                                    <h5 class="card-title">Notificaciones de éxito</h5>
+                                    <p class="card-text">Ingresa para chequear las notificaciones de los protocolos que terminaron exitosamente y continuar con el proyecto</p>   
                                 </div>
                                 </div>
                                 <div class="col-md-12 p-2 text-center" style="background: rgba(0,0,0,0.1)">
-                                    <a href="{{url('followProyects')}}" class="text-white" >Ir ! <i class="fa fa-arrow-circle-right"></i></a>
+                                    <a href="{{url('successfullNotice')}}" class="text-white" >Ir ! <i class="fa fa-arrow-circle-right"></i></a>
 
                                 </div>
                             </div>
