@@ -1,11 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-   <div class="container">
+<div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Protocolos asignados</div>
+        <div class="col-md-10">
+            <div class="bg-primary" style="height: 5px;"></div>
+            <div class="card rounded-0">
+                <div class="card-header bg-white">
+                    <h5> Protocolos asignados </h5>
+                </div>
                 <div class="card-body">
                     <table class="table table-sm">
                         <thead>
@@ -27,10 +30,17 @@
                                 <td>{{ (\App\Proyect::where('id', $protocol->id_proyecto)->pluck('nombre'))[0] }}</td>
                                 <td>{{ $protocol->estado }}</td>
                                 <td>
+                                @if($protocol->estado == 'Iniciado')
+                                    {{ Form::open(array('url' => 'protocol/exec')) }}
+                                        {{ Form::hidden('id', $protocol->id, ['class' => 'form-control' ]) }}
+                                        {{ Form::submit('Ejecutar', ['class' => 'btn btn-primary']) }}
+                                    {{ Form::close() }}
+                                @else
                                     {{ Form::open(array('url' => 'protocol/result')) }}
                                         {{ Form::hidden('id', $protocol->id, ['class' => 'form-control' ]) }}
                                         {{ Form::submit('Determinar resultado', ['class' => 'btn btn-primary']) }}
                                     {{ Form::close() }}
+                                @endif
                                 </td>
                             </tr>
                             @endforeach

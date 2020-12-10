@@ -3,6 +3,7 @@
 use App\User;
 use App\Proyect;
 use App\Protocol;
+use App\Notification;
 use App\Http\Controllers\RequestController;
 
 /*
@@ -47,7 +48,6 @@ Route::get('viewProtocols', function(){
 		$proyectsId = array();
 
 		foreach ($activeProyects as $proyect) {
-			var_dump(RequestController::instanceExists($proyect->id_case) ); var_dump(RequestController::getTaskName($proyect->id_case) ); die;
 			if(RequestController::instanceExists($proyect->id_case) &&
 			   (RequestController::getTaskName($proyect->id_case) == "Ejecución local de todas sus actividades" ||
 			    RequestController::getTaskName($proyect->id_case) == "Determinación de resultado") ){
@@ -56,7 +56,8 @@ Route::get('viewProtocols', function(){
 				//Buscamos la tarea que este en ready para ese caseId y la asignamos
 				$idTask = RequestController::getTask($proyect->id_case);
 				RequestController::assignTask($idTask, $idUser);
-
+				//Guardo en el proyecto el taskId actual para despues completar la tarea
+				$proyect->update(array('id_task' => $idTask));
 				$proyectsId [] = $proyect->id;
 				
 			}
@@ -79,9 +80,58 @@ Route::get('followProyects', function(){
 	return view('followProyect',  ['proyects' => $proyects]);
 })->middleware('jefe');
 
+Route::get('successfullNotice', function(){
+	$activeProyects = Proyect::whereNotNull('id_case')->get();
+	if($activeProyects != null){
+		$proyectsId = array();
+		foreach ($activeProyects as $proyect) {
+			if(RequestController::instanceExists($proyect->id_case) &&
+			   (RequestController::getTaskName($proyect->id_case) == "Notificación exitosa")){
+				$user = User::where('id', $proyect->id_responsable)->first();
+				//Aca buscamos el user que es jefe del proyecto del protocolo
+				$idUser = RequestController::getUserIdByName($user->email);
+				//Buscamos la tarea que este en ready para ese caseId y la asignamos
+				$idTask = RequestController::getTask($proyect->id_case);
+				RequestController::assignTask($idTask, $idUser);
+				//Guardo en el proyecto el taskId actual para despues completar la tarea
+				$proyect->update(array('id_task' => $idTask));
+				$proyectsId [] = $proyect->id;
+				
+			}
+		}
+		$notifications = Notification::where('leida', 0)->where('tipo_notificacion', 'Exitosa')->whereIn('id_proyecto', $proyectsId)->get();
+	}else{
+		$notifications = array();
+	}
+    
+    return view('successfullNotice',  ['notifications' => $notifications]);
+})->middleware('responsable');
+
 Route::get('errorsNotice', function(){
-   	$protocols = Protocol::whereNotNull('exec_error');
-	return view('errorsNotice',  ['protocols' => $protocols]);
+	$activeProyects = Proyect::whereNotNull('id_case')->get();
+	if($activeProyects != null){
+		$proyectsId = array();
+		foreach ($activeProyects as $proyect) {
+			if(RequestController::instanceExists($proyect->id_case) &&
+			   (RequestController::getTaskName($proyect->id_case) == "Notificación fallida")){
+				$user = User::where('id', $proyect->id_responsable)->first();
+				//Aca buscamos el user que es jefe del proyecto del protocolo
+				$idUser = RequestController::getUserIdByName($user->email);
+				//Buscamos la tarea que este en ready para ese caseId y la asignamos
+				$idTask = RequestController::getTask($proyect->id_case);
+				RequestController::assignTask($idTask, $idUser);
+				//Guardo en el proyecto el taskId actual para despues completar la tarea
+				$proyect->update(array('id_task' => $idTask));
+				$proyectsId [] = $proyect->id;
+				
+			}
+		}
+		$notifications = Notification::where('leida', 0)->where('tipo_notificacion', 'Fallida')->whereIn('id_proyecto', $proyectsId)->get();
+	}else{
+		$notifications = array();
+	}
+
+	return view('errorsNotice',  ['notifications' => $notifications]);
 })->middleware('jefe');
 
 Auth::routes();

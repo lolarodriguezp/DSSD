@@ -29,6 +29,13 @@ class RequestController extends Controller
         return $idUser;
     }
 
+    public static function getUserIdByName($user){
+        $response = GuzzleController::doTheRequest('GET', 'API/identity/user?f=userName='.$user);   
+        $idUser = $response['data'][0]->id; #Obtengo el id del usuario
+
+        return $idUser;
+    }
+
     public static function getProcessId(){
         $response = GuzzleController::doTheRequest('GET', 'API/bpm/process?p=0&c=1000');   
         $idProceso = $response['data'][0]->id; #Obtengo el id del proceso
@@ -79,8 +86,37 @@ class RequestController extends Controller
         
     }
 
-    public static function getTaskName($caseId){
-        $response = GuzzleController::doTheRequest('GET', 'API/bpm/task?f=caseId='.$caseId);   
+    public static function getTaskName($idCase){
+        $response = GuzzleController::doTheRequest('GET', 'API/bpm/task?f=caseId='.$idCase);   
         return ($response['data'][0]->name);
     }
+
+    public static function setUltimoProtocolo($idCase, $ultimo_protocolo){
+        $data = array(
+            "type" => "java.lang.Boolean", 
+            "value" => $ultimo_protocolo
+        );
+        $response = GuzzleController::doTheRequest('PUT', 'API/bpm/caseVariable/'.$idCase.'/ultimo_protocolo', $data);   
+        return $response;
+    }
+
+    public static function setFallaEjecucion($idCase, $falla_ejecucion){
+        $data = array(
+            "type" => "java.lang.Boolean", 
+            "value" => $falla_ejecucion
+        );
+        $response = GuzzleController::doTheRequest('PUT', 'API/bpm/caseVariable/'.$idCase.'/falla_ejecucion', $data);   
+        return $response;
+    }
+
+    public static function setContinuarProyecto($idCase, $continuar_proyecto){
+        $data = array(
+            "type" => "java.lang.Boolean", 
+            "value" => $continuar_proyecto
+        );
+        $response = GuzzleController::doTheRequest('PUT', 'API/bpm/caseVariable/'.$idCase.'/continuar_proyecto', $data);   
+        return $response;
+    }
+
+    
 }

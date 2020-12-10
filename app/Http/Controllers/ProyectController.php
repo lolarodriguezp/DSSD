@@ -37,7 +37,7 @@ class ProyectController extends Controller
             'id_responsable' => Input::get('idCreator'),
         ]);
         
-        $protocolo = Proyect::where('nombre', Input::get('nombre_proyecto'))->first();
+        $proyect = Proyect::where('nombre', Input::get('nombre_proyecto'))->first();
 
         //Busco el id del proceso
         $idProceso = RequestController::getProcessId();
@@ -45,19 +45,17 @@ class ProyectController extends Controller
         //Aca se instanciaria el proceso
         $idCase = RequestController::instantiateProcess($idProceso);
 
-        
-
+    
         //Aca buscamos el user 
         $idUser = RequestController::getUserId();
 
         //Buscamos la primer tarea 
         $idTask = RequestController::getTask($idCase);
         RequestController::assignTask($idTask, $idUser);
-        Session::put('idTask', $idTask);
 
-        //Guardo en el proyecto el caseId
-        $protocolo->update(array('id_case'=>$idCase));
+        //Guardo en el proyecto el caseId y el tasdkId actual
+        $proyect->update(array('id_case'=>$idCase, 'id_task' => $idTask));
 
-        return Redirect::to('addProtocols/'.$protocolo->id) ;
+        return Redirect::to('addProtocols/'.$proyect->id) ;
     }
 }
