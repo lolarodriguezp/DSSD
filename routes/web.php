@@ -48,6 +48,12 @@ Route::get('viewProtocols', function(){
 			if(RequestController::instanceExists($proyect->id_case) &&
 			   (RequestController::getTaskName($proyect->id_case) == "Ejecución local de todas sus actividades" ||
 			    RequestController::getTaskName($proyect->id_case) == "Determinación de resultado") ){
+				//Aca buscamos el user 
+				$idUser = RequestController::getUserId();
+				//Buscamos la tarea que este en ready para ese caseId y la asignamos
+				$idTask = RequestController::getTask($proyect->id_case);
+				RequestController::assignTask($idTask, $idUser);
+
 				$proyectsId [] = $proyect->id;
 			}
 		}
@@ -80,6 +86,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/proyect/store', 'ProyectController@store')->name('proyect.store')->middleware('jefe');
 Route::post('/protocol/store', 'ProtocolController@store')->name('protocol.store')->middleware('jefe');
-Route::get('/protocol/exec', 'ProtocolController@exec_protocol')->name('protocol.exec_protocol')->middleware('responsable');
+Route::post('/protocol/exec', 'ProtocolController@exec_protocol')->name('protocol.exec_protocol')->middleware('responsable');
 Route::post('/protocol/result', 'ProtocolController@result')->name('protocol.result')->middleware('responsable');
 Route::post('/protocol/storeResult', 'ProtocolController@storeResult')->name('protocol.storeResult')->middleware('responsable');
