@@ -118,5 +118,23 @@ class RequestController extends Controller
         return $response;
     }
 
+    public static function setidProyect($idCase, $idProyect){
+        $data = array(
+            "type" => "java.lang.Boolean", 
+            "value" => $idProyect
+        );
+        $response = GuzzleController::doTheRequest('PUT', 'API/bpm/caseVariable/'.$idCase.'/idProy', $data);   
+        return $response;
+    }
+
+    public static function setidProtocol($idCase, $idProtocol){
+        $data = array(
+            "type" => "java.lang.Boolean", 
+            "value" => $idProtocol
+        );
+        $response = GuzzleController::doTheRequest('PUT', 'API/bpm/caseVariable/'.$idCase.'/idProt', $data);   
+        return $response;
+    }
+
     
 }
