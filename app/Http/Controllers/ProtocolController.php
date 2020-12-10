@@ -40,7 +40,7 @@ class ProtocolController extends Controller
 
             //Cuando estoy procesando el protocolo con orden 1, me guardo el "es_local" y lo seteo como Iniciado
             if($request["orden"][$i] == 1){
-                $es_local = ($request["ejecucion"][$i] == 0) ? 0 : 1;
+                $es_local = ($request["ejecucion"][$i] == 0) ? true : false;
                 $protocol = Protocol::where('id', $id_protocol);
                 $protocol->update(array('estado'=> 'Iniciado'));
             }
