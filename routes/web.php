@@ -41,14 +41,18 @@ Route::get('addProtocols/{id}', function($id){
 })->middleware('jefe');
 
 Route::get('viewProtocols', function(){
-	$activeProyects = Proyect::whereNotNull('id_case');
+	$activeProyects = Proyect::whereNotNull('id_case')->get();
+
 	if($activeProyects != null){
 		$proyectsId = array();
+
 		foreach ($activeProyects as $proyect) {
+			var_dump(RequestController::instanceExists($proyect->id_case) ); var_dump(RequestController::getTaskName($proyect->id_case) ); die;
 			if(RequestController::instanceExists($proyect->id_case) &&
 			   (RequestController::getTaskName($proyect->id_case) == "Ejecución local de todas sus actividades" ||
 			    RequestController::getTaskName($proyect->id_case) == "Determinación de resultado") ){
 				$proyectsId [] = $proyect->id;
+				
 			}
 		}
 		$protocols = Protocol::Where('id_responsable', Auth::user()->id)->whereIn('id_proyecto', $proyectsId)->where('estado', '<>', 'Finalizado')->where('estado', '<>', 'Pendiente')->get();

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 class ProyectController extends Controller
 {
@@ -44,13 +45,15 @@ class ProyectController extends Controller
         //Aca se instanciaria el proceso
         $idCase = RequestController::instantiateProcess($idProceso);
 
+        
+
         //Aca buscamos el user 
         $idUser = RequestController::getUserId();
 
         //Buscamos la primer tarea 
         $idTask = RequestController::getTask($idCase);
         RequestController::assignTask($idTask, $idUser);
-
+        Session::put('idTask', $idTask);
 
         //Guardo en el proyecto el caseId
         $protocolo->update(array('id_case'=>$idCase));
