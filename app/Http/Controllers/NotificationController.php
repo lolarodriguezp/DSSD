@@ -39,8 +39,8 @@ class NotificationController extends Controller
                 RequestController::setEsLocal($proyecto->id_case, false);
                 RequestController::setidProyect($proyecto->id_case, $protocolo->id_proyecto);
                 RequestController::setidProtocol($proyecto->id_case, $protocolo->id);
-                $protocolo->update(array('estado'=> 'Iniciado'));
             }
+            $protocolo->update(array('estado'=> 'Iniciado'));
             
         }
         //Ejecuto la tarea en Bonita
@@ -74,8 +74,8 @@ class NotificationController extends Controller
                     RequestController::setEsLocal($proyecto->id_case, false);
                     RequestController::setidProyect($proyecto->id_case, $protocolo->id_proyecto);
                     RequestController::setidProtocol($proyecto->id_case, $protocolo->id);
-                    $protocolo->update(array('estado'=> 'Iniciado'));
                 }
+                $protocolo->update(array('estado'=> 'Iniciado'));
             }
             //Ejecuto la tarea en Bonita
             RequestController::runTask($proyecto->id_task);
