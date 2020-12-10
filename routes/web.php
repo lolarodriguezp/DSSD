@@ -85,18 +85,18 @@ Route::get('successfullNotice', function(){
 	if($activeProyects != null){
 		$proyectsId = array();
 		foreach ($activeProyects as $proyect) {
-			if(RequestController::instanceExists($proyect->id_case) &&
-			   (RequestController::getTaskName($proyect->id_case) == "Notificacion exitosa")){
-				$user = User::where('id', $proyect->id_responsable)->first();
-				//Aca buscamos el user que es jefe del proyecto del protocolo
-				$idUser = RequestController::getUserIdByName($user->email);
-				//Buscamos la tarea que este en ready para ese caseId y la asignamos
-				$idTask = RequestController::getTask($proyect->id_case);
-				RequestController::assignTask($idTask, $idUser);
-				//Guardo en el proyecto el taskId actual para despues completar la tarea
-				$proyect->update(array('id_task' => $idTask));
-				$proyectsId [] = $proyect->id;
-				
+			if(RequestController::instanceExists($proyect->id_case)){			
+				if(RequestController::getTaskName($proyect->id_case) == "Notificacion exitosa"){
+					$user = User::where('id', $proyect->id_responsable)->first();
+					//Aca buscamos el user que es jefe del proyecto del protocolo
+					$idUser = RequestController::getUserIdByName($user->email);
+					//Buscamos la tarea que este en ready para ese caseId y la asignamos
+					$idTask = RequestController::getTask($proyect->id_case);
+					RequestController::assignTask($idTask, $idUser);
+					//Guardo en el proyecto el taskId actual para despues completar la tarea
+					$proyect->update(array('id_task' => $idTask));
+					$proyectsId [] = $proyect->id;
+				}
 			}
 		}
 		$notifications = Notification::where('leida', 0)->where('tipo_notificacion', 'Exitosa')->whereIn('id_proyecto', $proyectsId)->get();
@@ -112,8 +112,8 @@ Route::get('errorsNotice', function(){
 	if($activeProyects != null){
 		$proyectsId = array();
 		foreach ($activeProyects as $proyect) {
-			if(RequestController::instanceExists($proyect->id_case) &&
-			   (RequestController::getTaskName($proyect->id_case) == "Notificación fallida")){
+			if(RequestController::instanceExists($proyect->id_case)){
+			   if(RequestController::getTaskName($proyect->id_case) == "Notificación fallida"){
 				$user = User::where('id', $proyect->id_responsable)->first();
 				//Aca buscamos el user que es jefe del proyecto del protocolo
 				$idUser = RequestController::getUserIdByName($user->email);
@@ -123,6 +123,7 @@ Route::get('errorsNotice', function(){
 				//Guardo en el proyecto el taskId actual para despues completar la tarea
 				$proyect->update(array('id_task' => $idTask));
 				$proyectsId [] = $proyect->id;
+			} 
 				
 			}
 		}
