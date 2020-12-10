@@ -104,14 +104,14 @@ class ProtocolController extends Controller
             'id_proyecto' => $proyecto->id
         ]);
 
-        $user = User::where('id', $proyecto->id_responsable)->first();
-        //Aca buscamos el user que es jede del proyecto del protocolo
-        $idUser = RequestController::getUserIdByName($user->email);
-        //Buscamos la proxima tarea seria (Notificacion exitosa o Notificacion fallida) y la asignamos al usuario
-        $idTask = RequestController::getTask($proyecto->id_case);
-        RequestController::assignTask($idTask, $idUser);
-        //Actualizo el task_id actual
-        $proyecto->update(array('id_task' => $idTask));
+        // $user = User::where('id', $proyecto->id_responsable)->first();
+        // //Aca buscamos el user que es jede del proyecto del protocolo
+        // $idUser = RequestController::getUserIdByName($user->email);
+        // //Buscamos la proxima tarea seria (Notificacion exitosa o Notificacion fallida) y la asignamos al usuario
+        // $idTask = RequestController::getTask($proyecto->id_case);
+        // RequestController::assignTask($idTask, $idUser);
+        // //Actualizo el task_id actual
+        // $proyecto->update(array('id_task' => $idTask));
 
         return redirect()->route('home');
     }
