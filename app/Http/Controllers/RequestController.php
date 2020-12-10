@@ -51,7 +51,7 @@ class RequestController extends Controller
         return $response;
     }
 
-    public static function getTask ($caseId){
+    public static function getTask($caseId){
         $response = GuzzleController::doTheRequest('GET', 'API/bpm/activity?p=0&c=1000&f=caseId='.$caseId);   
         return ($response['data'][0]->id);
     }
@@ -66,12 +66,12 @@ class RequestController extends Controller
     }
 
     public static function runTask($idTask){
-        $response = GuzzleController::doTheRequest('POST', '/bonita/API/bpm/userTask/'.$idTask.'/execution');   
+        $response = GuzzleController::doTheRequest('POST', 'API/bpm/userTask/'.$idTask.'/execution');   
         return $response;
     }
 
     public static function instanceExists($idCase){
-        $response = GuzzleController::doTheRequest('GET', '/bonita/API/bpm/activity?p=0&c=1000&f=caseId='.$idCase);
+        $response = GuzzleController::doTheRequest('GET', 'API/bpm/activity?p=0&c=1000&f=caseId='.$idCase);
         if(empty($response)){
             return false;
         }

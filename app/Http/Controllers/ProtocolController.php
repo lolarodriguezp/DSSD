@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Input;
 use App\Protocol;
 use App\Proyect;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 class ProtocolController extends Controller
 {
@@ -47,7 +48,7 @@ class ProtocolController extends Controller
             RequestController::setEsLocal($proyecto->id_case, $es_local);
         }
 
-        RequestController::runTask($proyecto->id_task);
+        RequestController::runTask(Session::get('idTask'));
 
         return redirect()->route('home');
     }

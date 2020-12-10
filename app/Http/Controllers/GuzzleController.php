@@ -21,7 +21,6 @@ class GuzzleController extends Controller
     private static $token = null;
 
 	public static function getGuzzleClient(){
-        if(static::$cliente === null){
         	//Creo una cookie jar para almacenar las cookies que me va a devolver Bonita luego del request del loginservice
             $cookieJar = new SessionCookieJar('MiCookie', true);
             $gcliente = new Client([
@@ -44,7 +43,6 @@ class GuzzleController extends Controller
         	static::$token = $token->getValue();
 
         	static::$cliente = $gcliente;
-        }
         
         return static::$cliente;
     }
