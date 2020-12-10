@@ -52,6 +52,11 @@ class ProtocolController extends Controller
         return redirect()->route('home');
     }
 
+    public function exec_protocol(){
+        $request = Input::all();
+        $protocoloId = $request["id"];
+    }
+
     public function result(){
     	$request = Input::all();
         $protocoloId = $request["id"];
