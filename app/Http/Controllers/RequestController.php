@@ -87,8 +87,13 @@ class RequestController extends Controller
     }
 
     public static function getTaskName($idCase){
-        $response = GuzzleController::doTheRequest('GET', 'API/bpm/task?f=caseId='.$idCase);   
-        return ($response['data'][0]->name);
+        $response = GuzzleController::doTheRequest('GET', 'API/bpm/task?f=caseId='.$idCase); 
+        if(empty($response)){
+            $name = "";
+        }else{
+            $name = $response['data'][0]->name;
+        }  
+        return $name;
     }
 
     public static function setUltimoProtocolo($idCase, $ultimo_protocolo){
