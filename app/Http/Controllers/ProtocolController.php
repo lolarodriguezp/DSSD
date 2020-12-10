@@ -16,7 +16,7 @@ class ProtocolController extends Controller
     public function show(){
     	$request = Input::all();
     	$protocolos = Protocol::where('id_responsable',$request["id"])->get();
-    	return view('viewProtocol',['protocols' => $protocolos] );
+    	return view('viewProtocols',['protocols' => $protocolos] );
     }	
 
     public function store(){
