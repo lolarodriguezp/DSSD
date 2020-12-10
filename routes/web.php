@@ -48,18 +48,18 @@ Route::get('viewProtocols', function(){
 		$proyectsId = array();
 
 		foreach ($activeProyects as $proyect) {
-			if(RequestController::instanceExists($proyect->id_case) &&
-			   (RequestController::getTaskName($proyect->id_case) == "Ejecución local de todas sus actividades" ||
-			    RequestController::getTaskName($proyect->id_case) == "Determinación de resultado") ){
-				//Aca buscamos el user 
-				$idUser = RequestController::getUserId();
-				//Buscamos la tarea que este en ready para ese caseId y la asignamos
-				$idTask = RequestController::getTask($proyect->id_case);
-				RequestController::assignTask($idTask, $idUser);
-				//Guardo en el proyecto el taskId actual para despues completar la tarea
-				$proyect->update(array('id_task' => $idTask));
-				$proyectsId [] = $proyect->id;
-				
+			if(RequestController::instanceExists($proyect->id_case)) {
+				if(RequestController::getTaskName($proyect->id_case) == "Ejecución local de todas sus actividades" ||
+					RequestController::getTaskName($proyect->id_case) == "Determinación de resultado") {
+					//Aca buscamos el user 
+					$idUser = RequestController::getUserId();
+					//Buscamos la tarea que este en ready para ese caseId y la asignamos
+					$idTask = RequestController::getTask($proyect->id_case);
+					RequestController::assignTask($idTask, $idUser);
+					//Guardo en el proyecto el taskId actual para despues completar la tarea
+					$proyect->update(array('id_task' => $idTask));
+					$proyectsId [] = $proyect->id;
+				}		
 			}
 		}
 		$protocols = Protocol::Where('id_responsable', Auth::user()->id)->whereIn('id_proyecto', $proyectsId)->where('estado', '<>', 'Finalizado')->where('estado', '<>', 'Pendiente')->get();
