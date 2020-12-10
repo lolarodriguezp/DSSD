@@ -105,7 +105,7 @@ Route::get('successfullNotice', function(){
 	}
     
     return view('successfullNotice',  ['notifications' => $notifications]);
-})->middleware('responsable');
+})->middleware('jefe');
 
 Route::get('errorsNotice', function(){
 	$activeProyects = Proyect::whereNotNull('id_case')->get();
