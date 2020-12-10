@@ -87,7 +87,7 @@ class RequestController extends Controller
     }
 
     public static function getTaskName($idCase){
-        $response = GuzzleController::doTheRequest('GET', 'API/bpm/task?f=caseId='.$idCase);   
+        $response = GuzzleController::doTheRequest('GET', 'API/bpm/activity?p=0&c=1000&f=caseId='.$idCase);   
         return ($response['data'][0]->name);
     }
 
@@ -103,9 +103,9 @@ class RequestController extends Controller
     public static function setFallaEjecucion($idCase, $falla_ejecucion){
         $data = array(
             "type" => "java.lang.Boolean", 
-            "value" => $falla_ejecucion
+            "value" => "true"
         );
-        $response = GuzzleController::doTheRequest('PUT', 'API/bpm/caseVariable/'.$idCase.'/falla_ejecución', $data);   
+        $response = GuzzleController::doTheRequest('PUT', 'API/bpm/caseVariable/'.$idCase.'/falla_ejecución', $data);
         return $response;
     }
 
